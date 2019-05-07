@@ -1,0 +1,12 @@
+{% extends "./base.html" %}
+
+{% block title %}Email sent{% endblock %}
+
+{% block login_nav %}{% endblock %}
+
+{% block heading %}Request sent{% endblock %}
+
+{% block content %}
+    <h2 align="center">After we finish processing your input file, we will send an Email with the output file to {{email}}.</h2>
+    <h2 align="center">Since there maybe many requests waiting in the queue, you may have to wait for a while to get the output file.</h2>
+{% endblock %}

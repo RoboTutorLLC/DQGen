@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>request</title>
+
+	<!-- login css -->
+	<link href="/../../static/web/css/style.css" rel="stylesheet">
+    
+  </head>
+  <body>
+    <div>
+      <form enctype="multipart/form-data" class="form" action="{% url 'handle_request' %}" method="POST">
+        {% if error %}
+		    <h3 align="center" class="form-heading" >{{ error }}</h3>
+        {% else %}
+            <h3 align="center" class="form-heading" >Submit your DQGen request!</h3>
+        {% endif %}
+
+        {% for field in form.visible_fields %}
+          <p>{{field.label}}</p>
+          <td>{{field}}</td>
+        {% endfor %}
+        </br>
+		<input type="submit" id="left" class="form-control" value="Submit">
+        {% csrf_token %}
+      </form>
+    </div>
+  </body>
+</html>
