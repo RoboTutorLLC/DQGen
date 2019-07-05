@@ -1,236 +1,30 @@
-@charset "UTF-8";
-/* CSS Document */
-body {
-	background-color:#eee;
-	padding-top:40px;
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
 }
-hr{
-    width:600px;
-    align:center;
-    background-color:black;
-    border:none;
-    height:1px;
-}
-/* login and sign up */
-.form {
-  width:550px;
-  margin-left:450px;
-  margin-right:200px;
-  font-family:Georgia
-}
-.form .form-heading {
-	background-color:deepskyblue;
-	color:white;
-	height:30px;
-	border-radius:5px;
-}
-.form .form-control {
-  position:relative;
-  height:auto;
-  box-sizing:border-box;
-  padding:10px;
-  font-size: 16px;
-  border-radius:5px;
-  border:1px solid #ccc;
-}
-.form input[name="inputUsername"]{
-  width:550px;
-  float:left;
-}
-.form input[name="email"]{
-  width:550px;
-  float:left;
-}
-.form input[name="confirmEmail"]{
-  width:550px;
-  float:left;
-}
-.form input[type="password"]{
-  width:550px;
-  float:left;
-}
-.form input[id="left"]{
-  margin-top:10px;
-  width:250px;
-  height:40px;
-  float:left;
-  background-color:red;
-  color:white;
-}
-.form input[id="right"]{
-  margin-top:10px;
-  width:250px;
-  height:40px;
-  float:right;
-  background-color:forestgreen;
-  color:white;
-}
-.form .instructions{
-    white-space:nowrap;
-	font-size:15px;
-	font-family:Arial;
-	color:#151515;
-}
-.form .instruction1 {
-    width:250px;
-	float:left;
-}
-.form .instruction2 {
-    width:250px;
-	float:right;
-}
-.form .instruction {
-	height:10px;
-	font-family:Arial;
-	font-size:15px;
-}
-.form input[name="inputFirstName"]{
-    width:275px;
-    float:left;
-}
-.form input[name="inputLastName"]{
-    width:275px;
-    float:right;
-}
-.form input[name="reset"]{
-    margin-top:10px;
-    width:550px;
-    height:40px;
-    float:left;
-    background-color:deepskyblue;
-    color:white;
-    font-size: 16px;
-    border-radius:5px;
+.icon-block .material-icons {
+	font-size: inherit;
 }
 
-/* profile and global stream */
-.head{
-    float:right;
-}
-.heading{
-	background-image:url(../image/cover.jpg);
-	height:200px;
-	margin-top:0px;
-}
-.heading .username{
-	padding-top:120px;
-	padding-left:50px;
-	font-size:30px;
-}
-.user-info{
-	margin-top:100px;
-	font-family:Arial;
-}
-.blog-publish{
-    margin-top:50px;
-    margin-left:300px;
-	margin-right:300px;
-	margin-bottom:100px;
-}
-.blog-publish input{
-    margin-top:10px;
-    width:600px;
-    border-radius:5px;
-}
-.blog-publish textarea{
-    margin-top:10px;
-    width:900px;
-    border-radius:5px;
-    float:left;
-}
-.blog-publish input[type="submit"]{
-    margin-top:10px;
-    margin-left:30px;
-    width:200px;
-    height:40px;
-    float:left;
-    background-color:gray;
-    color:white;
-    border-radius:5px;
-}
-.blog-post{
-    margin-top:30px;
-	text-align:center;
-}
-.blog-post-title{
-	margin-top:60px;
-	font-family:Arial;
-}
-.blog-post-meta{
-	font-family:georgia;
-	color:gray;
-}
-.blog-post-content{
-	margin-left:300px;
-	margin-right:300px;
-	font-family:Arial;
-	text-align:center;
+.inspiration {
+    color: #f0e5df;
 }
 
-/* edit profile css */
-.edit-profile{
-    margin-top:20px;
-    margin-left:400px;
-}
-.edit-profile input{
-    margin-bottom:10px;
-    width:500px;
-    border-radius:5px;
-}
-.edit-profile textarea{
-    margin-bottom:10px;
-    width:900px;
-    border-radius:5px;
-}
-.edit-profile input[type='submit']{
-    margin-top:10px;
-    width:200px;
-    height:40px;
-    float:left;
-    background-color:gray;
-    color:white;
-    border-radius:5px;
+.logo {
+    padding-top: 4px;
 }
 
-/* reset css*/
-.follow input[type="submit"]{
-    margin-top:10px;
-    width:200px;
-    height:40px;
-    background-color:deepskyblue;
-    color:white;
-    border-radius:5px;
+.nav-grad {
+    background-image: linear-gradient(to right, #e1f5fe , #039be5);
 }
-.reset {
-    margin-top:100px;
-    width:550px;
-    margin-left:450px;
-    margin-right:200px;
-    font-family:Georgia
-}
-.reset .form-heading {
-	background-color:deepskyblue;
-	color:white;
-	height:30px;
-	border-radius:5px;
-}
-.reset input[type="password"]{
-    width:550px;
-    float:left;
-}
-.reset input[type="submit"]{
-    width:550px;
-    float:left;
-    background-color:forestgreen;
-    color:white;
-    font-size:18px;
-}
-.reset .form-control {
-    position:relative;
-    height:auto;
-    box-sizing:border-box;
-    padding:10px;
-    font-size: 16px;
-    border-radius:5px;
-    border:1px solid #ccc;
+
+hr {
+    border-color: #b3e5fc;
 }
