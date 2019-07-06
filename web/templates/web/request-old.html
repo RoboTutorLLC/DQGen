@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>request</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/web/css/bootstrap.min.css" rel="stylesheet">
+    <!-- global stream css -->
+    <link href="/../../static/web/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <form enctype="multipart/form-data" class="form" action="{% url 'handle_request' %}" method="POST">
+        <div class="form-group">
+          {% if error %}
+          <h2 class="form-heading error">{{ error }}</h2>
+          {% else %}
+              <h2 class="form-heading">DQGen Request</h2>
+          {% endif %}
+        </div>
+
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+          <label>{{field.label}}</label>
+          <td>{{field}}</td>
+          {% for error in field.errors %}
+            <!-- <div class="invalid-feedback"> -->
+              <small class="invalid-feedback"> {{ error|escape }} </small>
+            <!-- </div> -->
+          {% endfor %}
+        </div>
+        {% endfor %}
+		<input type="submit" id="left" class="form-control btn btn-primary" value="Submit">
+        {% csrf_token %}
+      </form>
+    </div>
+  </body>
+</html>

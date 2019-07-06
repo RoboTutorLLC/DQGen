@@ -1,32 +1,344 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>request</title>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>DQGen Request</title>
 
-	<!-- login css -->
-	<link href="/../../static/web/css/style.css" rel="stylesheet">
-    
-  </head>
-  <body>
-    <div>
-      <form enctype="multipart/form-data" class="form" action="{% url 'handle_request' %}" method="POST">
-        {% if error %}
-		    <h3 align="center" class="form-heading" >{{ error }}</h3>
-        {% else %}
-            <h3 align="center" class="form-heading" >Submit your DQGen request!</h3>
-        {% endif %}
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../../static/web/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../../static/web/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <div class="navbar nav-grad">
+    <nav class="nav-grad" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">
+          <img class="logo" src="../../static/web/images/logo.png">
+        </a>
+        <ul class="right hide-on-med-and-down">
+          <li><a class="white-text" href="https://www.cmu.edu/scs/robotutor/">RoboTutor at CMU</a></li>
+          <li><a class="white-text" href="https://github.com/robotutorllc">Contribute</a></li>
+        </ul>
 
-        {% for field in form.visible_fields %}
-          <p>{{field.label}}</p>
-          <td>{{field}}</td>
-        {% endfor %}
-        </br>
-		<input type="submit" id="left" class="form-control" value="Submit">
+        <ul id="nav-mobile" class="sidenav">
+          <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br>
+      <div class="center">
+        <h1 class="header light-blue-text text-accent-3">DQGen</h1>
+        <h5 class="header col s12 light">Dynamically generate multiple-choice questions for your students</h5>
+        <div class="row">
+          <div class="col s12 m2"></div>
+          <div class="col s12 m8">
+            <p class="light">
+              DQGen takes a text file and automatically generates multiple-choice reading comprehension questions
+              for your students. Simply upload a text file and enter your email, and you'll soon receive an
+              updated passage with a built-in quiz.
+            </p>
+          </div>
+          <div class="col s12 m2"></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+<!--   Request Form   -->
+  <div class="container">
+    <br>
+    <hr>
+    <br><br>
+    <div class="section">
+      <form enctype="multipart/form-data" class="form col s12" action="{% url 'handle_request' %}" method="POST">
+        <div class="file-field input-field">
+          <div class="btn light-blue lighten-2">
+            <span>Input File</span>
+            <input type="file" name="input_file" required>
+          </div>
+          <div class="file-path-wrapper">
+            {% if form.input_file.errors %}
+              <input class="file-path invalid validate" type="text" placeholder=".txt or .zip only">
+            {% else %}
+              <input class="file-path validate" type="text" placeholder=".txt or .zip only">
+            {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            {% if form.email.errors %}
+              <input id="email" type="email" class="invalid validate" name="email" required>
+            {% else %}
+              <input id="email" type="email" class="validate" name="email" required>
+            {% endif %}
+            <label for="email">Email</label>
+            <span class="helper-text" data-error="Invalid Email Address" data-success="">Please enter a valid email address.</span>
+          </div>
+        </div>
+
+        <ul class="collapsible">
+          <li>
+            <div onclick="changeArrow()" class="collapsible-header"><i id="advanced" class="material-icons">keyboard_arrow_right</i>Advanced Options</div>
+            <div class="collapsible-body">
+              <div class="row">
+                <div id="max_context_lines" class="input-field col s12">
+                  <select name="max_context_lines">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected>3 (Default)</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <label>Maximum number of lines used to generate each question</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="min_context_lines" class="input-field col s12">
+                    <select name="min_context_lines">
+                        <option value="1" selected>1 (Default)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <label>Minimum number of lines used to generate each question</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="ungram_kid_lines" class="input-field col s12">
+                  <select name="ungram_kid_lines">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="ungram_kid_lines">Maximum number of words in ungrammatical distractor candidate list</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="input_ungram_distractors" class="input-field col s12">
+                  <select name="input_ungram_distractors">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="input_ungram_distractors">Number of ungrammatical distractor candidates as input per filter</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="output_ungram_distractor" class="input-field col s12">
+                  <select name="output_ungram_distractor">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="output_ungram_distractor">Number of ungrammatical candidates passed through per filter</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="ungram_num" class="input-field col s12">
+                  <select name="ungram_num">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="ungram_num">Maximum number of ungrammatical distractors in a question</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="nonsen_kid_words" class="input-field col s12">
+                  <select name="nonsen_kid_words">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="nonsen_kid_words">Maximum number of words in nonsensical distractor candidate list</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="input_nonsensical_distractors" class="input-field col s12">
+                  <select name="input_nonsensical_distractors">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="input_nonsensical_distractors">Number of nonsensical distractor candidates as input per filter</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="nonsen_num" class="input-field col s12">
+                  <select name="nonsen_num">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="nonsen_num">Maximum number of nonsensical distractors in a question</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="plau_kid_words" class="input-field col s12">
+                  <select name="plau_kid_words">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="plau_kid_words">Maximum number of words in a plausible distractor candidate list</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="input_plau_distractors" class="input-field col s12">
+                  <select name="input_plau_distractors">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="input_plau_distractors">Number of plausible distractor candidates as input per filter</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="output_plau_distractor" class="input-field col s12">
+                  <select name="output_plau_distractor">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="output_plau_distractor">Number of plausible candidates passed through per filter</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div id="plau_num" class="input-field col s12">
+                  <select name="plau_num">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3" selected>3 (Default)</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  <label for="plau_num">Maximum number of plausible distractors in a question</label>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <br>
+        <div class="row center">
+          <button type="submit" name="action" class="btn-large waves-effect waves-light light-blue lighten-2">
+            Submit<i class="material-icons right">launch</i>
+          </button>
+          <!-- <input type="submit" id="submit" class="btn-large waves-effect waves-light light-blue lighten-2" value="Submit"> -->
+        </div>
         {% csrf_token %}
       </form>
     </div>
+    <br><br><br>
+  </div>
+
+  <footer class="page-footer light-blue lighten-3">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About RoboTutor</h5>
+          <p class="white-text text-lighten-2">
+            RoboTutor is a scalable open-source tablet app that teaches basic literacy and numeracy. DQGen expands on
+            the capabilities of RoboTutor and allows teachers to quickly and easily build reading comprehension quizzes.
+          </p>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright light-blue lighten-2">
+      <div class="container">
+      Inspired by <a class="inspiration" href="http://materializecss.com"><b>Materialize</b></a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../../static/web/js/materialize.js"></script>
+  <script src="../../static/web/js/init.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.collapsible').collapsible();
+      $('select').formSelect();
+      var errorString = "{{ error|safe }}"
+      errorString = errorString.replace(/'/g, '"')
+      var error = JSON.parse(errorString)
+      console.log("error?")
+      console.log(error)
+      for (i = 0; i < error.length; i++) {
+        M.toast({html: `Error: ${error[i]}`});
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    function changeArrow() {
+      console.log('hiii!!!')
+      if ($("#advanced").text() === "keyboard_arrow_right") {
+        $("#advanced").text("keyboard_arrow_down")
+      } else {
+        console.log($("#advanced"))
+        $("#advanced").text("keyboard_arrow_right")
+      }
+    }
+  </script>
+
   </body>
 </html>
